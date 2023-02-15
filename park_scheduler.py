@@ -72,6 +72,7 @@ def optimize_park_scheduling(days, parks, companies):
                     if(p2["demanding"]):
                         d2 = d1 + timedelta(days=1) 
                         problem += variables[p1["name"]][d1] + variables[p2["name"]][d2] <= 1 + slack_variables_7[p1["name"]][p2["name"]][d1][d2], ("Constraint 7: demanding parks cannot be assigned on consecutive days. Parks " + str(p1["name"]) + " and " + str(p2["name"] + ". Days: " + str(d1) + " and " + str(d2)))
+                        problem += variables[p1["name"]][d2] + variables[p2["name"]][d1] <= 1 + slack_variables_7[p1["name"]][p2["name"]][d1][d2], ("Constraint 7: demanding parks cannot be assigned on consecutive days. Parks " + str(p1["name"]) + " and " + str(p2["name"] + ". Days: " + str(d2) + " and " + str(d1)))
     
     # Constraint 8: Parks of the same company should be visited within a specific time interval
     for c in companies:
@@ -111,7 +112,7 @@ magic_kingdom = {"name" : "Magic Kingdom", "company": "Disney", "demanding" : Tr
                     date(year=2022, month=9, day=24), date(year=2022, month=9, day=25), date(year=2022, month=9, day=26)], 
                     "preferred_days": []}
 
-animal_kingdom = {"name" : "Animal Kingdom", "company": "Disney", "demanding" : True, "cannot_visit_days": [], "must_visit_day": None, 
+animal_kingdom = {"name" : "Animal Kingdom", "company": "Disney", "demanding" : False, "cannot_visit_days": [], "must_visit_day": None, 
                     "days_to_avoid": [date(year=2022, month=9, day=17),date(year=2022, month=9, day=18),date(year=2022, month=9, day=24), date(year=2022, month=9, day=25)], 
                     "preferred_days": []}
 
